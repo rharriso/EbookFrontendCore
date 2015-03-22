@@ -1,0 +1,3 @@
+#define Ebook_VERSION_MAJOR @Ebook_VERSION_MAJOR@
+#define Ebook_VERSION_MINOR @Ebook_VERSION_MINOR@
+
