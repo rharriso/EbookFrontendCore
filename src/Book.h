@@ -3,6 +3,8 @@
 
 class Book
 {
+    public:
+        int id;
 };
 
 #endif
