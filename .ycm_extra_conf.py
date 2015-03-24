@@ -29,6 +29,7 @@
 # For more information, please refer to <http://unlicense.org/>
 
 import os
+import fnmatch
 import ycm_core
 
 # These are the compilation flags that will be used in case there's no
@@ -88,6 +89,8 @@ flags = [
 '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1',
 '-isystem',
 '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
+
+# project includes
 ]
 
 
@@ -193,3 +196,11 @@ def FlagsForFile( filename, **kwargs ):
     'flags': final_flags,
     'do_cache': True
   }
+
+# include include folders in libs
+for root, dirs, filenames in os.walk("./lib"):
+  print filenames
+  for d in fnmatch.filter(dirs, "include"):
+    flags.append("-I")
+    flags.append(os.path.join(root, d))
+    print os.path.join(root, d)
