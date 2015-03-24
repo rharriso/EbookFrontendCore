@@ -1,3 +1,0 @@
-[submodule "lib/hiberlite"]
-	path = lib/hiberlite
-	url = git@github.com:paulftw/hiberlite.git
