@@ -9,6 +9,8 @@ add_executable(ebook src/ebook.cpp)
 set (Ebook_VERSION_MAJOR 0)
 set (Ebook_VERSION_MINOR 0)
 
+set (LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib)
+
 # C++ version
 add_definitions(-std=c++11)
 
@@ -29,14 +31,21 @@ if(NOT DL_LIB)
   message(SEND_ERROR "Failed to find the dl library, need to install to you system.")
 endif()
 
-# add hiberlite headers
-include_directories(./lib/hiberlite/include)
-find_library(HIBERLITE_LIB hiberlite
-  PATHS ./lib/hiberlite)
+# add hiberlit
+ExternalProject_Add(hiberlite
+  PREFIX ${LIB_DIR}/hiberlite
+  GIT_REPOSITORY git@github.com:paulftw/hiberlite.git
+  CONFIGURE_COMMAND ""
+  BUILD_IN_SOURCE 1
+  BUILD_COMMAND make libhiberlite.a
+  INSTALL_COMMAND ""
+  )
+add_dependencies(ebook hiberlite)
+include_directories(${LIB_DIR}/hiberlite/src/hiberlite/include/)
 
 # link packages
 target_link_libraries(ebook 
-  ${HIBERLITE_LIB}
+  ${LIB_DIR}/hiberlite/src/hiberlite/libhiberlite.a
   ${SQLITE3_LIBRARY}
   ${DL_LIB}
   ${PTHREAD_LIB})
