@@ -9,7 +9,7 @@ add_executable(ebook src/ebook.cpp)
 set (Ebook_VERSION_MAJOR 0)
 set (Ebook_VERSION_MINOR 0)
 
-set (LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/lib)
+set (LIB_DIR ${CMAKE_CURRENT_BINARY_DIR}/../lib)
 
 # C++ version
 add_definitions(-std=c++11)
@@ -33,7 +33,7 @@ endif()
 
 # add hiberlit
 ExternalProject_Add(hiberlite
-  PREFIX ${LIB_DIR}/hiberlite
+  SOURCE_DIR ${LIB_DIR}/hiberlite
   GIT_REPOSITORY git@github.com:paulftw/hiberlite.git
   CONFIGURE_COMMAND ""
   BUILD_IN_SOURCE 1
@@ -41,11 +41,11 @@ ExternalProject_Add(hiberlite
   INSTALL_COMMAND ""
   )
 add_dependencies(ebook hiberlite)
-include_directories(${LIB_DIR}/hiberlite/src/hiberlite/include/)
+include_directories(${LIB_DIR}/hiberlite/include/)
 
 # link packages
 target_link_libraries(ebook 
-  ${LIB_DIR}/hiberlite/src/hiberlite/libhiberlite.a
+  ${LIB_DIR}/hiberlite/libhiberlite.a
   ${SQLITE3_LIBRARY}
   ${DL_LIB}
   ${PTHREAD_LIB})
